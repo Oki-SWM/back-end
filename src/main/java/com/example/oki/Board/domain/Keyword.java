@@ -17,6 +17,6 @@ public class Keyword {
     @Column(unique = true)
     private String date;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "keyword")
-    private List<Board> boards = new ArrayList<Board>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "subject")
+    private List<Board> subjects = new ArrayList<>();
 }

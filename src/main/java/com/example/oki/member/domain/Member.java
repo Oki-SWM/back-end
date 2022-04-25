@@ -1,8 +1,14 @@
 package com.example.oki.member.domain;
 
+import com.example.oki.Board.domain.Board;
+import com.example.oki.Board.domain.Like;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
