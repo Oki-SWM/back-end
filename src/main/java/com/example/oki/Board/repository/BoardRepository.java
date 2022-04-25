@@ -17,5 +17,4 @@ public interface BoardRepository {
 
     // id로 찾기
     Optional<Board> findById(Long id);
-
 }
