@@ -17,7 +17,7 @@ public class Member {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String memberId;
 
     @Column(nullable = false)
