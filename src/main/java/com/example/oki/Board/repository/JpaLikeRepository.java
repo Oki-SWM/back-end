@@ -1,7 +1,6 @@
 package com.example.oki.Board.repository;
 
 import com.example.oki.Board.domain.Like;
-
 import javax.persistence.EntityManager;
 
 public class JpaLikeRepository implements LikeRepository{
@@ -20,16 +19,24 @@ public class JpaLikeRepository implements LikeRepository{
 
     @Override
     public void deleteLike(Long boardId, Long memberId) {
-
+        Like like = em.createQuery("select l from Like l where l.follower = :memberId and l.following = :boardId", Like.class)
+                .setParameter("boardId", boardId)
+                .setParameter("memberId", memberId)
+                .getSingleResult();
+        em.detach(like);
     }
 
     @Override
-    public int countByBoard(Long id) {
-        return 0;
+    public Long countByBoard(Long id) {
+        return em.createQuery("select count(l) from Like l where l.following = :id", Long.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 
     @Override
-    public int countByMember(Long id) {
-        return 0;
+    public Long countByMember(Long id) {
+        return em.createQuery("select count(l) from Like l where l.follower = :id", Long.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }
