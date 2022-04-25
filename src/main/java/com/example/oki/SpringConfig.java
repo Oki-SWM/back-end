@@ -11,14 +11,9 @@ import javax.persistence.EntityManager;
 
 @Configuration
 public class SpringConfig {
-
-    private final BoardRepository boardRepository;
-    private final LikeRepository likeRepository;
     private final EntityManager em;
 
-    public SpringConfig(BoardRepository boardRepository, LikeRepository likeRepository, EntityManager em) {
-        this.boardRepository = boardRepository;
-        this.likeRepository = likeRepository;
+    public SpringConfig(EntityManager em) {
         this.em = em;
     }
 
