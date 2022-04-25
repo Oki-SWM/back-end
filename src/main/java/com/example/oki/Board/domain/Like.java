@@ -1,10 +1,12 @@
 package com.example.oki.Board.domain;
 
 import com.example.oki.member.domain.Member;
+import lombok.Getter;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 @Table(name = "likes")
 public class Like {
     @Id

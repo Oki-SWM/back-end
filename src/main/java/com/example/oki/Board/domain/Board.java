@@ -1,12 +1,14 @@
 package com.example.oki.Board.domain;
 
 import com.example.oki.member.domain.Member;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

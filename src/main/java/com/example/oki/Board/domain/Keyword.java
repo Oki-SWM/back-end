@@ -1,10 +1,13 @@
 package com.example.oki.Board.domain;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 public class Keyword {
 
     @Id

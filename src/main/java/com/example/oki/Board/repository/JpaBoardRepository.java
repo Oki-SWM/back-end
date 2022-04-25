@@ -15,13 +15,13 @@ public class JpaBoardRepository implements BoardRepository{
     }
 
     @Override
-    public Board createBoard(Board board) {
+    public Board save(Board board) {
         em.persist(board);
         return board;
     }
 
     @Override
-    public void deleteBoard(Long id) {
+    public void delete(Long id) {
         Optional<Board> board = findById(id);
         em.detach(board);
     }

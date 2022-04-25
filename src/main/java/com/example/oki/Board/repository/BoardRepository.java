@@ -7,10 +7,10 @@ import java.util.Optional;
 
 public interface BoardRepository {
     // 게시물 생성
-    Board createBoard(Board board);
+    Board save(Board board);
 
     // 게시물 삭제
-    void deleteBoard(Long id);
+    void delete(Long id);
 
     // 키워드별로 가져오기
     List<Board> getBySubject(String subject);

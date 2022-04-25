@@ -4,10 +4,10 @@ import com.example.oki.Board.domain.Like;
 
 public interface LikeRepository {
     // 좋아요 생성
-    Like createLike(Like like);
+    Like save(Like like);
 
     // 좋아요 삭제
-    void deleteLike(Long boardId, Long memberId);
+    void delete(Long boardId, Long memberId);
 
     // 게시물별 좋아요 수
     Long countByBoard(Long id);
