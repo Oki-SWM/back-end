@@ -1,5 +1,7 @@
 package com.example.oki.Board.domain;
 
+import com.example.oki.member.domain.Member;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
