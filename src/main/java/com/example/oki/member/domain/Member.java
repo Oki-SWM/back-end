@@ -48,4 +48,10 @@ public class Member {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "creator")
+    private List<Board> creators = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "follower")
+    private List<Like> followers = new ArrayList<>();
 }
