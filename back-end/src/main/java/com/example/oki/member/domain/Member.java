@@ -6,9 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -26,6 +26,9 @@ public class Member {
 
     @Column(nullable = false)
     private String password;
+
+    @Column
+    private LocalDateTime loginTime;
     
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "creator")
     private List<Board> creators = new ArrayList<>();

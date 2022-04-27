@@ -2,15 +2,17 @@ package com.example.oki.member.service;
 
 import com.example.oki.member.domain.Member;
 import com.example.oki.member.repository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public MemberService(MemberRepository memberRepository){
+    public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 
@@ -22,8 +24,13 @@ public class MemberService {
     }
 
     public Member signInMember(String memberId, String password) {
-        return memberRepository.findByMemberId(memberId).
-                filter(m -> m.getPassword().equals(password))
-                .orElse(null);
+        Optional<Member> loginMember = memberRepository.findByMemberId(memberId).
+                filter(m -> m.getPassword().equals(password));
+        if (loginMember.isEmpty()) {
+            return null;
+        }
+        LocalDateTime date = LocalDateTime.now();
+        loginMember.get().setLoginTime(date);
+        return loginMember.get();
     }
 }
