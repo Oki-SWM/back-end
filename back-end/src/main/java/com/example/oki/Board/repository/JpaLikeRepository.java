@@ -12,13 +12,13 @@ public class JpaLikeRepository implements LikeRepository{
     }
 
     @Override
-    public Like createLike(Like like) {
+    public Like save(Like like) {
         em.persist(like);
         return like;
     }
 
     @Override
-    public void deleteLike(Long boardId, Long memberId) {
+    public void delete(Long boardId, Long memberId) {
         Like like = em.createQuery("select l from Like l where l.follower = :memberId and l.following = :boardId", Like.class)
                 .setParameter("boardId", boardId)
                 .setParameter("memberId", memberId)
