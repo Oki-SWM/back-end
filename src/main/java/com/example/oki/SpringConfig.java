@@ -8,7 +8,6 @@ import com.example.oki.Board.service.KeywordService;
 import com.example.oki.Board.service.LikeService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import javax.persistence.EntityManager;
 
 @Configuration
