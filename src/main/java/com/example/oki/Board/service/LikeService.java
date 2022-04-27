@@ -1,19 +1,36 @@
 package com.example.oki.Board.service;
 
+import com.example.oki.Board.domain.Board;
 import com.example.oki.Board.domain.Like;
+import com.example.oki.Board.dto.LikeDto;
+import com.example.oki.Board.repository.BoardRepository;
 import com.example.oki.Board.repository.LikeRepository;
+import com.example.oki.member.domain.Member;
+import com.example.oki.member.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class LikeService {
 
     private LikeRepository likeRepository;
+    private BoardRepository boardRepository;
 
-    public LikeService(LikeRepository likeRepository) {
+    @Autowired
+    private MemberRepository memberRepository;
+
+    public LikeService(LikeRepository likeRepository, BoardRepository boardRepository) {
         this.likeRepository = likeRepository;
+        this.boardRepository = boardRepository;
     }
 
     // 좋아요 생성
-    public Long createLike(Like like) {
+    public Long createLike(LikeDto likeDto) {
+
+        Member follower = memberRepository.findById(likeDto.getMemberId()).get();
+        Board following = boardRepository.findById(likeDto.getBoardId()).get();
+
+        Like like = new Like(follower, following);
         likeRepository.save(like);
+
         return like.getId();
     }
 

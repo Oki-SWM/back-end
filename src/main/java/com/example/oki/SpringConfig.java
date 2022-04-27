@@ -1,10 +1,11 @@
 package com.example.oki;
 
 import com.example.oki.Board.controller.BoardController;
+import com.example.oki.Board.controller.LikeController;
 import com.example.oki.Board.repository.*;
 import com.example.oki.Board.service.BoardService;
-import com.example.oki.member.repository.JpaMemberRepository;
-import com.example.oki.member.repository.MemberRepository;
+import com.example.oki.Board.service.KeywordService;
+import com.example.oki.Board.service.LikeService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,8 +25,23 @@ public class SpringConfig {
     }
 
     @Bean
+    public LikeController likeController() {
+        return new LikeController(likeService());
+    }
+
+    @Bean
     public BoardService boardService() {
-        return new BoardService(boardRepository(), memberRepository(), keywordRepository());
+        return new BoardService(boardRepository(), keywordRepository());
+    }
+
+    @Bean
+    public LikeService likeService() {
+        return new LikeService(likeRepository(), boardRepository());
+    }
+
+    @Bean
+    public KeywordService keywordService() {
+        return new KeywordService(keywordRepository());
     }
 
     @Bean
@@ -41,10 +57,5 @@ public class SpringConfig {
     @Bean
     public KeywordRepository keywordRepository() {
         return new JpaKeywordRepository(em);
-    }
-
-    @Bean
-    public MemberRepository memberRepository() {
-        return new JpaMemberRepository();
     }
 }

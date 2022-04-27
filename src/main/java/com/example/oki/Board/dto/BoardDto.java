@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class BoardDto {
 
-    private String memberId;
+    private Long creatorId;
 
     private String keyword;
 

@@ -7,26 +7,27 @@ import com.example.oki.Board.repository.BoardRepository;
 import com.example.oki.Board.repository.KeywordRepository;
 import com.example.oki.member.domain.Member;
 import com.example.oki.member.repository.MemberRepository;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 
 public class BoardService {
 
-    private final BoardRepository boardRepository;
-    private final MemberRepository memberRepository;
-    private final KeywordRepository keywordRepository;
+    private BoardRepository boardRepository;
+    private KeywordRepository keywordRepository;
 
-    public BoardService(BoardRepository boardRepository, MemberRepository memberRepository, KeywordRepository keywordRepository) {
+    @Autowired
+    private MemberRepository memberRepository;
+
+    public BoardService(BoardRepository boardRepository, KeywordRepository keywordRepository) {
         this.boardRepository = boardRepository;
-        this.memberRepository = memberRepository;
         this.keywordRepository = keywordRepository;
     }
 
     // 게시물 생성
     public Long createBoard(BoardDto boardDto) {
 
-        Member creator = memberRepository.findById(boardDto.getMemberId()).get();
+        Member creator = memberRepository.findById(boardDto.getCreatorId()).get();
         Keyword subject = keywordRepository.findByKeyword(boardDto.getKeyword()).get();
 
         Board board = new Board(creator, subject, boardDto.getCreateTime(), boardDto.getImgPath());
@@ -38,6 +39,11 @@ public class BoardService {
     // 게시물 삭제
     public void deleteBoard(Long id) {
         boardRepository.delete(id);
+    }
+
+    // 게시물 찾기
+    public Optional<Board> findBoard(Long id) {
+        return boardRepository.findById(id);
     }
 
     // 키워드별 게시물 가져오기
