@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class MemberController {
 
-    @Autowired
-    MemberService memberService;
+    private final MemberService memberService;
+
+    MemberController(MemberService memberService){
+        this.memberService = memberService;
+    }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<Message> signUp(@RequestBody Member m) {

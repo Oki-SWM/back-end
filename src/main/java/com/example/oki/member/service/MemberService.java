@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class MemberService {
 
-    @Autowired
-    MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository){
+        this.memberRepository = memberRepository;
+    }
 
     public boolean signUpMember(Member m) {
         if (memberRepository.findByMemberId(m.getMemberId()).isPresent())

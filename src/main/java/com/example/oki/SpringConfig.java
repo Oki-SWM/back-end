@@ -20,9 +20,6 @@ public class SpringConfig {
     }
 
     @Bean
-    public MemberRepository memberRepository() { return new JpaMemberRepository(em); }
-
-    @Bean
     public BoardRepository boardRepository() {
         return new JpaBoardRepository(em);
     }
