@@ -3,9 +3,12 @@ package com.example.oki.Board.controller;
 import com.example.oki.Board.domain.Board;
 import com.example.oki.Board.dto.BoardDto;
 import com.example.oki.Board.service.BoardService;
+import com.example.oki.message.Message;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -22,33 +25,39 @@ public class BoardController {
     }
 
     // 게시판 목록
-    @GetMapping("/")
+    @GetMapping
     @ResponseBody
-    public String list(@RequestParam(value = "subject") String subject) throws JsonProcessingException {
+    public ResponseEntity<Message> list(@RequestParam(value = "keyword") String keyword) throws JsonProcessingException {
 
-        List<Board> boards = boardService.getBoards(subject);
+        List<Board> boards = boardService.getBoards(keyword);
 
-        return mapper.writeValueAsString(boards);
+        Message message = new Message(HttpStatus.OK, "Success", boards);
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     // 게시판 생성
-    @PostMapping("/")
+    @PostMapping
     @ResponseBody
-    public String create(@RequestBody BoardDto boardDto) {
+    public ResponseEntity<Message> create(@RequestBody BoardDto boardDto) {
         boardService.createBoard(boardDto);
 
-        return "redirect:/board/"+boardDto.getKeyword();
+        Message message = new Message(HttpStatus.OK, "Success", null);
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     // 게시판 삭제
-    @DeleteMapping("/")
-    public String delete(@RequestParam(value = "id") Long id) {
+    @DeleteMapping
+    public ResponseEntity<Message> delete(@RequestParam(value = "id") Long id) {
         Board board = boardService.findBoard(id).get();
 
         String subject = board.getSubject().getKeyword();
 
         boardService.deleteBoard(id);
 
-        return "redirect:/board"+subject;
+        Message message = new Message(HttpStatus.OK, "Success", null);
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

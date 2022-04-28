@@ -2,6 +2,9 @@ package com.example.oki.Board.controller;
 
 import com.example.oki.Board.dto.LikeDto;
 import com.example.oki.Board.service.LikeService;
+import com.example.oki.message.Message;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/like")
@@ -14,27 +17,42 @@ public class LikeController {
     }
 
     // 좋아요 생성
-    @PostMapping("/")
-    public String create(@RequestBody LikeDto likeDto) {
+    @PostMapping
+    public ResponseEntity<Message> create(@RequestBody LikeDto likeDto) {
         likeService.createLike(likeDto);
 
-        return "";
+        Message message = new Message(HttpStatus.OK, "Success", null);
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     // 좋아요 삭제
-    @DeleteMapping("/")
-    public String delete(@RequestBody Long memberId, Long boardId) {
+    @DeleteMapping
+    public ResponseEntity<Message> delete(@RequestParam(value = "memberId") Long memberId, @RequestParam(value = "boardId") Long boardId) {
         likeService.deleteLike(boardId, memberId);
 
-        return "";
+        Message message = new Message(HttpStatus.OK, "Success", null);
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    // 사용자별 좋아요 가져오기기
+    // 사용자 좋아요 개수
     @GetMapping("/member")
-    public String getMemberCnt(@RequestBody Long memberId) {
-        Long cnt = likeService.getMemberCnt(memberId);
-        
-        return "";
+    public ResponseEntity<Message> getMemberCnt(@RequestParam(value = "id") Long id) {
+        Long cnt = likeService.getMemberCnt(id);
+
+        Message message = new Message(HttpStatus.OK, "Success", cnt);
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
+    // 게시물 좋아요 개수
+    @GetMapping("/board")
+    public ResponseEntity<Message> getBoardCnt(@RequestParam(value = "id") Long id) {
+        Long cnt = likeService.getBoardCnt(id);
+
+        Message message = new Message(HttpStatus.OK, "Success", cnt);
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
 }

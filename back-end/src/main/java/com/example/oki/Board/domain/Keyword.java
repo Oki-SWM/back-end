@@ -1,5 +1,6 @@
 package com.example.oki.Board.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class Keyword {
     @Column(unique = true)
     private String date;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "subject")
     private List<Board> subjects = new ArrayList<>();
 
