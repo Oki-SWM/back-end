@@ -5,8 +5,7 @@ import com.example.oki.Board.domain.Like;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,6 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,4 +40,12 @@ public class Member {
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "follower")
     private List<Like> followers = new ArrayList<>();
+
+    @Builder
+    public Member(String name, String memberId, String password, LocalDateTime loginTime) {
+        this.name = name;
+        this.memberId = memberId;
+        this.password = password;
+        this.loginTime = loginTime;
+    }
 }
