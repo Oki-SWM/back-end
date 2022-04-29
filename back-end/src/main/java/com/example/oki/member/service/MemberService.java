@@ -21,7 +21,7 @@ public class MemberService {
     public boolean signUpMember(MemberDto memberDto) {
         if (memberRepository.findByMemberId(memberDto.getMemberId()).isPresent())
             return false;
-        Member member = new Member(memberDto.getName(), memberDto.getMemberId(), memberDto.getPassword());
+        Member member = new Member(memberDto.getName(), memberDto.getMemberId(), memberDto.getPassword(), LocalDateTime.now());
         memberRepository.save(member);
         return true;
     }
