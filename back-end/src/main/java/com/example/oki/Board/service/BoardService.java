@@ -8,9 +8,12 @@ import com.example.oki.Board.repository.KeywordRepository;
 import com.example.oki.member.domain.Member;
 import com.example.oki.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 public class BoardService {
 
     private BoardRepository boardRepository;
@@ -47,7 +50,10 @@ public class BoardService {
     }
 
     // 키워드별 게시물 가져오기
-    public List<Board> getBoards(String subject) {
+    public List<Board> getBoards(String keyword) {
+
+        Keyword subject = keywordRepository.findByKeyword(keyword).get();
+
         return boardRepository.getBySubject(subject);
     }
 }
