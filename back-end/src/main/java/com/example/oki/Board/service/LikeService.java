@@ -10,6 +10,7 @@ import com.example.oki.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Transactional
 public class LikeService {
@@ -28,13 +29,17 @@ public class LikeService {
     // 좋아요 생성
     public Long createLike(LikeDto likeDto) {
 
-        Member follower = memberRepository.findById(likeDto.getMemberId()).get();
-        Board following = boardRepository.findById(likeDto.getBoardId()).get();
+        Optional<Member> follower = memberRepository.findById(likeDto.getMemberId());
+        Optional<Board> following = boardRepository.findById(likeDto.getBoardId());
 
-        Like like = new Like(follower, following);
-        likeRepository.save(like);
+        if (follower.isEmpty() || following.isEmpty())
+            return null;
+        else {
+            Like like = new Like(follower.get(), following.get());
+            likeRepository.save(like);
 
-        return like.getId();
+            return like.getId();
+        }
     }
 
     // 좋아요 삭제

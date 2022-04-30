@@ -19,11 +19,16 @@ public class LikeController {
     // 좋아요 생성
     @PostMapping
     public ResponseEntity<Message> create(@RequestBody LikeDto likeDto) {
-        likeService.createLike(likeDto);
 
-        Message message = new Message(HttpStatus.OK, "Success", null);
+        if (likeService.createLike(likeDto) == null) {
+            Message message = new Message(HttpStatus.NOT_FOUND, "Incorrect memberid or boardid", null);
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+        else {
+            Message message = new Message(HttpStatus.OK, "Success", null);
 
-        return new ResponseEntity<>(message, HttpStatus.OK);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
     }
 
     // 좋아요 삭제
