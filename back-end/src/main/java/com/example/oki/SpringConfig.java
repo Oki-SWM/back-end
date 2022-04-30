@@ -1,6 +1,7 @@
 package com.example.oki;
 
 import com.example.oki.Board.controller.BoardController;
+import com.example.oki.Board.controller.KeywordController;
 import com.example.oki.Board.controller.LikeController;
 import com.example.oki.Board.repository.*;
 import com.example.oki.Board.service.BoardService;
@@ -16,6 +17,11 @@ public class SpringConfig {
 
     public SpringConfig(EntityManager em) {
         this.em = em;
+    }
+
+    @Bean
+    public KeywordController keywordController() {
+        return new KeywordController(keywordService());
     }
 
     @Bean
