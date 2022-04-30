@@ -29,9 +29,9 @@ public class JpaBoardRepository implements BoardRepository{
     }
 
     @Override
-    public List<Board> getBySubject(Keyword subject) {
-        return em.createQuery("select b from Board b where b.subject = :subject", Board.class)
-                .setParameter("subject", subject)
+    public List<Board> getBySubject(String keyword) {
+        return em.createQuery("select b from Board b where b.subject.keyword = :keyword", Board.class)
+                .setParameter("keyword", keyword)
                 .getResultList();
     }
 

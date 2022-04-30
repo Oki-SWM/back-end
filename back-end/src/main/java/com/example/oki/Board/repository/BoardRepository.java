@@ -14,7 +14,7 @@ public interface BoardRepository {
     void delete(Long id);
 
     // 키워드별로 가져오기
-    List<Board> getBySubject(Keyword subject);
+    List<Board> getBySubject(String keyword);
 
     // id로 찾기
     Optional<Board> findById(Long id);

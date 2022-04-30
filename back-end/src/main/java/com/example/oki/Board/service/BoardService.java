@@ -55,11 +55,11 @@ public class BoardService {
     // 키워드별 게시물 가져오기
     public List<Board> getBoards(String keyword) {
 
-        Optional<Keyword> subject = keywordRepository.findByKeyword(keyword);
+//        Optional<Keyword> subject = keywordRepository.findByKeyword(keyword);
+//
+//        if (subject.isEmpty())
+//            return null;
 
-        if (subject.isEmpty())
-            return null;
-
-        return boardRepository.getBySubject(subject.get());
+        return boardRepository.getBySubject(keyword);
     }
 }
