@@ -2,6 +2,8 @@ package com.example.oki.member.dto;
 
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class MemberDto {
 
@@ -10,4 +12,6 @@ public class MemberDto {
     private String memberId;
 
     private String password;
+
+    private LocalDateTime loginTime;
 }
