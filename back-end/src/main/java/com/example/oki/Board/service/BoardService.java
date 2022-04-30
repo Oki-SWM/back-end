@@ -16,8 +16,8 @@ import java.util.Optional;
 @Transactional
 public class BoardService {
 
-    private BoardRepository boardRepository;
-    private KeywordRepository keywordRepository;
+    private final BoardRepository boardRepository;
+    private final KeywordRepository keywordRepository;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -30,10 +30,13 @@ public class BoardService {
     // 게시물 생성
     public Long createBoard(BoardDto boardDto) {
 
-        Member creator = memberRepository.findById(boardDto.getCreatorId()).get();
-        Keyword subject = keywordRepository.findByKeyword(boardDto.getKeyword()).get();
+        Optional<Member> creator = memberRepository.findById(boardDto.getCreatorId());
+        Optional<Keyword> subject = keywordRepository.findByKeyword(boardDto.getKeyword());
 
-        Board board = new Board(creator, subject, boardDto.getCreateTime(), boardDto.getImgPath());
+        if (creator.isEmpty() || subject.isEmpty())
+            return null;
+
+        Board board = new Board(creator.get(), subject.get(), boardDto.getCreateTime(), boardDto.getImgPath());
         boardRepository.save(board);
 
         return board.getId();
@@ -52,8 +55,11 @@ public class BoardService {
     // 키워드별 게시물 가져오기
     public List<Board> getBoards(String keyword) {
 
-        Keyword subject = keywordRepository.findByKeyword(keyword).get();
+        Optional<Keyword> subject = keywordRepository.findByKeyword(keyword);
 
-        return boardRepository.getBySubject(subject);
+        if (subject.isEmpty())
+            return null;
+
+        return boardRepository.getBySubject(subject.get());
     }
 }
