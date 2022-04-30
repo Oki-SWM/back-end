@@ -34,17 +34,15 @@ public class LikeService {
 
         if (follower.isEmpty() || following.isEmpty())
             return null;
-        else {
-            Like like = new Like(follower.get(), following.get());
 
-            if(validateDuplicateLike(like)) {
-                likeRepository.save(like);
+        Like like = new Like(follower.get(), following.get());
 
-                return like.getId();
-            }
-            else
-                return null;
-        }
+        if(validateDuplicateLike(like))
+            return null;
+
+        likeRepository.save(like);
+
+        return like.getId();
     }
 
     // 좋아요 삭제
@@ -65,9 +63,8 @@ public class LikeService {
     // 중복 검사
     private boolean validateDuplicateLike(Like like) {
         if(likeRepository.validateDuplicate(like).isEmpty())
-            return true;
-        else
             return false;
+        else
+            return true;
     }
-
 }

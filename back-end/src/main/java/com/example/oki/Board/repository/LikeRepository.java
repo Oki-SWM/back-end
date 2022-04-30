@@ -2,6 +2,7 @@ package com.example.oki.Board.repository;
 
 import com.example.oki.Board.domain.Like;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface LikeRepository {

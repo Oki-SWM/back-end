@@ -26,7 +26,6 @@ public class LikeController {
         }
         else {
             Message message = new Message(HttpStatus.OK, "Success", null);
-
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
     }
