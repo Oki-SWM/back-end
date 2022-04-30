@@ -19,23 +19,22 @@ public class JpaLikeRepository implements LikeRepository{
 
     @Override
     public void delete(Long boardId, Long memberId) {
-        Like like = em.createQuery("select l from Like l where l.follower = :memberId and l.following = :boardId", Like.class)
+        em.createQuery("delete from Like l where l.follower.id = :memberId and l.following.id = :boardId")
                 .setParameter("boardId", boardId)
                 .setParameter("memberId", memberId)
-                .getSingleResult();
-        em.detach(like);
+                .executeUpdate();
     }
 
     @Override
     public Long countByBoard(Long id) {
-        return em.createQuery("select count(l) from Like l where l.following = :id", Long.class)
+        return em.createQuery("select count(l) from Like l where l.following.id = :id", Long.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
 
     @Override
     public Long countByMember(Long id) {
-        return em.createQuery("select count(l) from Like l where l.follower = :id", Long.class)
+        return em.createQuery("select count(l) from Like l where l.follower.id = :id", Long.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }

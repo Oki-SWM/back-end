@@ -9,6 +9,9 @@ import com.example.oki.member.domain.Member;
 import com.example.oki.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.transaction.Transactional;
+
+@Transactional
 public class LikeService {
 
     private LikeRepository likeRepository;
@@ -48,4 +51,6 @@ public class LikeService {
     public Long getMemberCnt(Long id) {
         return likeRepository.countByMember(id);
     }
+
+
 }

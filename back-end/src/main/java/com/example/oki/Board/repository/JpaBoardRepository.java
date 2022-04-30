@@ -1,6 +1,7 @@
 package com.example.oki.Board.repository;
 
 import com.example.oki.Board.domain.Board;
+import com.example.oki.Board.domain.Keyword;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -22,12 +23,13 @@ public class JpaBoardRepository implements BoardRepository{
 
     @Override
     public void delete(Long id) {
-        Optional<Board> board = findById(id);
-        em.detach(board);
+        em.createQuery("delete from Board b where b.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
     @Override
-    public List<Board> getBySubject(String subject) {
+    public List<Board> getBySubject(Keyword subject) {
         return em.createQuery("select b from Board b where b.subject = :subject", Board.class)
                 .setParameter("subject", subject)
                 .getResultList();
