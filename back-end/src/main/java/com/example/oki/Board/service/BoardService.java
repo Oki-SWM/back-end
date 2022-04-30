@@ -36,7 +36,7 @@ public class BoardService {
         if (creator.isEmpty() || subject.isEmpty())
             return null;
 
-        Board board = new Board(creator.get(), subject.get(), boardDto.getCreateTime(), boardDto.getImgPath());
+        Board board = new Board(creator.get(), subject.get(), boardDto.getCreateTime(), boardDto.getComment());
         boardRepository.save(board);
 
         return board.getId();

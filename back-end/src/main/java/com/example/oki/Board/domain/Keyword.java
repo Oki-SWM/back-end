@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +24,14 @@ public class Keyword {
     private String keyword;
 
     @Column(unique = true)
-    private String date;
+    private LocalDateTime date;
 
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "subject")
     private List<Board> subjects = new ArrayList<>();
 
     @Builder
-    public Keyword(String keyword, String date) {
+    public Keyword(String keyword, LocalDateTime date) {
         this.keyword = keyword;
         this.date = date;
     }
