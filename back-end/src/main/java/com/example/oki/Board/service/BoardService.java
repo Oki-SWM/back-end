@@ -10,6 +10,7 @@ import com.example.oki.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,7 @@ public class BoardService {
         if (creator.isEmpty() || subject.isEmpty())
             return null;
 
-        Board board = new Board(creator.get(), subject.get(), boardDto.getCreateTime(), boardDto.getComment());
+        Board board = new Board(creator.get(), subject.get(), LocalDateTime.now(), boardDto.getComment());
         boardRepository.save(board);
 
         return board.getId();

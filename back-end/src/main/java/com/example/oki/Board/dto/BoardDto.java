@@ -11,7 +11,5 @@ public class BoardDto {
 
     private String keyword;
 
-    private LocalDateTime createTime;
-
     private String comment;
 }
