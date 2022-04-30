@@ -14,18 +14,18 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    MemberController(MemberService memberService){
+    MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
 
     @PostMapping("signup")
     public ResponseEntity<Message> signUp(@RequestBody MemberDto memberDto) {
-        if (memberService.signUpMember(memberDto)) {
-            Message message = new Message(HttpStatus.OK, "Success", null);
-            return new ResponseEntity<>(message, HttpStatus.OK);
+        if (!memberService.signUpMember(memberDto)) {
+            Message message = new Message(HttpStatus.CONFLICT, "Duplicate id", null);
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
-        Message message = new Message(HttpStatus.CONFLICT, "Duplicate id", null);
-        return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        Message message = new Message(HttpStatus.OK, "Success", null);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @PostMapping("signin")
