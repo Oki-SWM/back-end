@@ -36,9 +36,14 @@ public class LikeService {
             return null;
         else {
             Like like = new Like(follower.get(), following.get());
-            likeRepository.save(like);
 
-            return like.getId();
+            if(validateDuplicateLike(like)) {
+                likeRepository.save(like);
+
+                return like.getId();
+            }
+            else
+                return null;
         }
     }
 
@@ -57,5 +62,12 @@ public class LikeService {
         return likeRepository.countByMember(id);
     }
 
+    // 중복 검사
+    private boolean validateDuplicateLike(Like like) {
+        if(likeRepository.validateDuplicate(like).isEmpty())
+            return true;
+        else
+            return false;
+    }
 
 }
