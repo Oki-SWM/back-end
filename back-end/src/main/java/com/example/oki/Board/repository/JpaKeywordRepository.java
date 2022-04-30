@@ -15,10 +15,8 @@ public class JpaKeywordRepository implements KeywordRepository {
 
     @Override
     public Optional<Keyword> findByKeyword(String keyword) {
-        Keyword subject =  em.createQuery("select k from Keyword k where k.keyword = :keyword", Keyword.class)
+        return em.createQuery("select k from Keyword k where k.keyword = :keyword", Keyword.class)
                 .setParameter("keyword", keyword)
-                .getSingleResult();
-
-        return Optional.ofNullable(subject);
+                .getResultList().stream().findAny();
     }
 }
