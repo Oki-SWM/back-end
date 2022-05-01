@@ -10,6 +10,7 @@ import com.example.oki.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,7 @@ public class BoardService {
         if (creator.isEmpty() || subject.isEmpty())
             return null;
 
-        Board board = new Board(creator.get(), subject.get(), boardDto.getCreateTime(), boardDto.getImgPath());
+        Board board = new Board(creator.get(), subject.get(), LocalDateTime.now(), boardDto.getComment());
         boardRepository.save(board);
 
         return board.getId();
@@ -55,11 +56,11 @@ public class BoardService {
     // 키워드별 게시물 가져오기
     public List<Board> getBoards(String keyword) {
 
-        Optional<Keyword> subject = keywordRepository.findByKeyword(keyword);
+//        Optional<Keyword> subject = keywordRepository.findByKeyword(keyword);
+//
+//        if (subject.isEmpty())
+//            return null;
 
-        if (subject.isEmpty())
-            return null;
-
-        return boardRepository.getBySubject(subject.get());
+        return boardRepository.getBySubject(keyword);
     }
 }

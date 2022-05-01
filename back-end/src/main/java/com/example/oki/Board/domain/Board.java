@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,19 +30,19 @@ public class Board {
     private Keyword subject;
 
     @Column(nullable = false)
-    private String createTime;
+    private LocalDateTime createTime;
 
     @Column(nullable = false)
-    private String imgPath;
+    private String comment;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "following")
     private List<Like> followings = new ArrayList<>();
 
     @Builder
-    public Board(Member creator, Keyword subject, String createTime, String imgPath) {
+    public Board(Member creator, Keyword subject, LocalDateTime createTime, String comment) {
         this.creator = creator;
         this.subject = subject;
         this.createTime = createTime;
-        this.imgPath = imgPath;
+        this.comment = comment;
     }
 }

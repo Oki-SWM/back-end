@@ -2,6 +2,8 @@ package com.example.oki.Board.repository;
 
 import com.example.oki.Board.domain.Like;
 import javax.persistence.EntityManager;
+import java.util.List;
+import java.util.Optional;
 
 public class JpaLikeRepository implements LikeRepository{
 
@@ -37,5 +39,15 @@ public class JpaLikeRepository implements LikeRepository{
         return em.createQuery("select count(l) from Like l where l.follower.id = :id", Long.class)
                 .setParameter("id", id)
                 .getSingleResult();
+    }
+
+    @Override
+    public Optional<Like> validateDuplicate(Like like) {
+        List<Like> duplicate = em.createQuery("select l from Like l where l.follower.id = :memberId and l.following.id = :boardId", Like.class)
+                .setParameter("memberId", like.getFollower().getId())
+                .setParameter("boardId", like.getFollowing().getId())
+                .getResultList();
+
+        return duplicate.stream().findAny();
     }
 }

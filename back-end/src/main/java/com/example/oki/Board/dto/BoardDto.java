@@ -2,6 +2,8 @@ package com.example.oki.Board.dto;
 
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class BoardDto {
 
@@ -9,7 +11,5 @@ public class BoardDto {
 
     private String keyword;
 
-    private String createTime;
-
-    private String imgPath;
+    private String comment;
 }
